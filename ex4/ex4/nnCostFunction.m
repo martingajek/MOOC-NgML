@@ -88,12 +88,24 @@ J_vect = (-Y.*log(a3)-(1-Y).*log(1-a3));
 %J = sum(sum(J_vect ));
 J = 1/m*(sum(sum(J_vect ))+0.5*lambda*(sum(sumsq(Theta1))+sum(sumsq(Theta2))));
 
-
-
-
-
-
 % -------------------------------------------------------------
+
+
+for t = 1:m
+   %coeffs layer 3
+   d3 = a3(t,:)-Y(t,:);
+   d3 = d3';
+   
+   %coeffs layer 2
+    
+   d2 = Theta2' *d3.*sigmoidGradient();
+
+end
+
+
+
+
+
 
 % =========================================================================
 
