@@ -83,9 +83,10 @@ a3 = sigmoid(z3);
 
 % Calculation of cost function
 
-J_vect = 1/m*(-Y'*log(a3)-(1-Y)'*log(1-a3));
-J = sum(sum(J_vect ));
 
+J_vect = (-Y.*log(a3)-(1-Y).*log(1-a3));
+%J = sum(sum(J_vect ));
+J = 1/m*(sum(sum(J_vect ))+0.5*lambda*(sum(sumsq(Theta1))+sum(sumsq(Theta2))));
 
 
 
