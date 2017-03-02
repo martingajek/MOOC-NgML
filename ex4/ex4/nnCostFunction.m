@@ -62,7 +62,17 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-Y = 
+
+% build Y matrix from y vector
+
+
+Y = zeros(length(y),num_labels);
+for c = 1:num_labels
+  indexes = find(y==c);
+  Y(indexes,c)=1;
+end
+
+% FWD propagation to calculate the h(thetai) indexes
 
 X_temp = [ones(m,1),X];
 z2 = X_temp*Theta1';
@@ -71,13 +81,10 @@ a2 = [ones(length(a2),1),a2];
 z3 = a2*Theta2';
 a3 = sigmoid(z3); 
 
+% Calculation of cost function
 
-
-J = 1/m*
-
-
-
-
+J_vect = 1/m*(-Y'*log(a3)-(1-Y)'*log(1-a3));
+J = sum(sum(J_vect ));
 
 
 
