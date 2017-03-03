@@ -76,6 +76,7 @@ end
 
 X_temp = [ones(m,1),X];
 z2 = X_temp*Theta1';
+%z2 = [ones(length(z2),1),z2];
 a2 = sigmoid(z2);
 a2 = [ones(length(a2),1),a2];
 z3 = a2*Theta2';
@@ -86,25 +87,37 @@ a3 = sigmoid(z3);
 
 J_vect = (-Y.*log(a3)-(1-Y).*log(1-a3));
 %J = sum(sum(J_vect ));
-J = 1/m*(sum(sum(J_vect ))+0.5*lambda*(sum(sumsq(Theta1))+sum(sumsq(Theta2))));
+Theta1_redux = Theta1(:,2:end);
+Theta2_redux = Theta2(:,2:end);
+J = 1/m*(sum(sum(J_vect ))+0.5*lambda*(sum(sumsq(Theta1_redux))+sum(sumsq(Theta2_redux))));
 
 % -------------------------------------------------------------
 
-
+Delta1 = zeros(size(Theta1));
+Delta2 = zeros(size(Theta2));
 for t = 1:m
    %coeffs layer 3
    d3 = a3(t,:)-Y(t,:);
    d3 = d3';
    
    %coeffs layer 2
-    
-   d2 = Theta2' *d3.*sigmoidGradient();
-
+   z2_temp = [1,z2(t,:)];
+   d2 = (Theta2' *d3).*sigmoidGradient(z2_temp');
+   d2 = d2(2:end);
+   Delta2 = Delta2+d3*a2(t,:);
+   Delta1 = Delta1+d2*X_temp(t,:);   
 end
 
 
+Theta1_grad0 = 1/m*Delta1(:,1);
+Theta1_grad_res = 1/m*Delta1(:,2:end)+lambda/m*Theta1_redux;
 
 
+Theta2_grad0 = 1/m*Delta2(:,1);
+Theta2_grad_res = 1/m*Delta2(:,2:end)+lambda/m*Theta2_redux;
+
+Theta1_grad = [Theta1_grad0,Theta1_grad_res];
+Theta2_grad = [Theta2_grad0,Theta2_grad_res];
 
 
 % =========================================================================
