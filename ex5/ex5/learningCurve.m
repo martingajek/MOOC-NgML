@@ -56,7 +56,7 @@ error_val   = zeros(m, 1);
 
 lambda = 0;
 for i = 1:m
-    fprintf(' using %f  \n', i);
+    %fprintf(' using %f  \n', i);
     X_temp = X(1:i, :);
     y_temp = y(1:i);
     [theta] = trainLinearReg(X_temp, y_temp, lambda);

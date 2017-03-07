@@ -29,7 +29,7 @@ grad0 = 1/m*temp'*ones(m,1);
 
 % remnant gradients
 
-grad_res = 1/m*(temp'*X(:,2:end)+lambda*theta_res);
+grad_res = 1/m*(X(:,2:end)'*temp+lambda*theta_res);
 grad = [grad0;grad_res];
 
 % =========================================================================
