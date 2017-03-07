@@ -54,6 +54,17 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
+lambda = 0;
+for i = 1:m
+    fprintf(' using %f  \n', i);
+    X_temp = X(1:i, :);
+    y_temp = y(1:i);
+    [theta] = trainLinearReg(X_temp, y_temp, lambda);
+    [J_train, grad] = linearRegCostFunction(X_temp, y_temp, theta, lambda);
+    error_train(i) = J_train;
+    [J_val, grad] = linearRegCostFunction(Xval, yval, theta, lambda);
+    error_val(i) = J_val;
+end
 
 
 

@@ -20,15 +20,17 @@ grad = zeros(size(theta));
 %
 
 
+temp = X*theta-y;
 
+theta_res = theta(2:end);
+J = 0.5/m*(temp'*temp+lambda*theta_res'*theta_res);
+% first gradiend
+grad0 = 1/m*temp'*ones(m,1);
 
+% remnant gradients
 
-
-
-
-
-
-
+grad_res = 1/m*(temp'*X(:,2:end)+lambda*theta_res);
+grad = [grad0;grad_res];
 
 % =========================================================================
 
