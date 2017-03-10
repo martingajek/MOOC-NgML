@@ -24,11 +24,21 @@ sigma = 0.3;
 %
 
 
-
-
-
-
-
+valvect = [0.01,0.03,0.1,0.3,1,3,10,30];
+errmat = zeros(size(valvect'*valvect));
+for i = 1:length(valvect)
+	for j = 1:length(valvect)
+		tempC = valvect(i);
+		tempsigma = valvect(j);
+		fprintf(['Training using C value of %f and sigma = %f \n'], tempC, tempsigma);
+		model= svmTrain(X, y, tempC, @(x1, x2) gaussianKernel(x1, x2, tempsigma)); 
+		predictions = svmPredict(model, Xval);
+		errmat(i,j) = mean(double(predictions ~= yval));
+	end
+end
 % =========================================================================
 
+[row,col]=find(errmat == min(min(errmat)));
+C = valvect(row);
+sigma = valvect(col);
 end
